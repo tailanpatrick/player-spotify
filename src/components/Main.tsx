@@ -24,11 +24,12 @@ const Main = () => {
                             className="absolute text-5xl right-2 bottom-2 text-[#1ed760] opacity-0 group-hover:opacity-100 transition-opacity duration-100 ease-in-out z-10"
                         />
                     </div>
-                    <div className="w-full justify-start mt-3 text-center">
+                    <div className="w-full justify-start px-3 py-2">
                         <p className="text-md">Henrique & Juliano</p>
                         <p className="text-sm">Artista</p>
                     </div>
                 </div>
+                
                 <div className="group flex flex-col items-center py-3 px-0 rounded-md bg-transparent hover:bg-[rgba(49,50,50,1)] transition duration-300 ease-in-out cursor-pointer">
                     <div className="relative overflow-hidden flex justify-center items-center">
                         <img
@@ -41,7 +42,7 @@ const Main = () => {
                             className="absolute text-5xl right-2 bottom-2 text-[#1ed760] opacity-0 group-hover:opacity-100 transition-opacity duration-100 ease-in-out z-10"
                         />
                     </div>
-                    <div className="w-full justify-start mt-3 text-center">
+                    <div className="w-full justify-start px-3 py-2">
                         <p className="text-md">Henrique & Juliano</p>
                         <p className="text-sm">Artista</p>
                     </div>
