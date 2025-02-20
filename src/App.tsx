@@ -1,8 +1,12 @@
 import Header from "./components/Header"
+import Main from "./components/Main"
 
 const App = () => {
   return (
-    <Header />
+    <div className="flex flex-col h-screen">
+      <Header />
+      <Main />
+    </div>
   )
 }
 
