@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import SingleItem from "./SingleItem"
 
 type ItemListProps = {
@@ -13,9 +14,9 @@ const ItemList = ({ title, items, itemsArray, path }: ItemListProps) => {
 
             <div className="flex justify-between items-center">
                 <h2 className="text-xl font-bold">{title} populares</h2>
-                <a className="hover:underline text-sm font-bold text-[#a7a7a7]" href={path}>
+                <Link className="hover:underline text-sm font-bold text-[#a7a7a7]" to={path}>
                     Mostrar tudo
-                </a>
+                </Link>
             </div>
 
             <div className=" w-full flex flex-wrap justify-center items-center gap-0 my-3">
