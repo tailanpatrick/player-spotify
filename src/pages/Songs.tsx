@@ -1,9 +1,8 @@
+import Main from "../components/Main"
 
 const Songs = () => {
   return (
-    <div>
-      Songs
-    </div>
+    <Main type="songs"/>
   )
 }
 
