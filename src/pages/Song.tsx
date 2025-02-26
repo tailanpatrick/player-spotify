@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import Player from "../components/Player"
 
 const Song = () => {
@@ -9,11 +10,11 @@ const Song = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-[1fr_3fr_1fr] place-items-center bg-black text-white gap-4 py-4 px-6">
+      <div className="grid grid-cols-[1fr_3fr_1fr]  place-items-center bg-black text-white gap-4 py-4 px-6">
 
-        <div className="justify-self-start rounded overflow-hidden">
+        <Link to="/artists/1" className="justify-self-start rounded overflow-hidden">
           <img width={75} height={75} src="https://i.scdn.co/image/ab6761610000517477937baabc49dea13c17c706" alt="Imagem do artista X" />
-        </div>
+        </Link>
 
         <Player />
 
