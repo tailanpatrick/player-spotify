@@ -5,4 +5,5 @@ export interface Song {
     artist: string;
     audio: string;
     id: number;
+    number?: number;
   }
