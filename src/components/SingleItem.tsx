@@ -11,7 +11,7 @@ export type SingleItemProps = {
     path: string;
 }
 
-const SingleItem = ({id, name, image, banner, artist , path}: SingleItemProps) => {
+const SingleItem = ({id, name, image, artist , path}: SingleItemProps) => {
     return (
 
         <Link to={`${path}/${id}`} className="group flex flex-col w-[180px] h-[270px] md:w-[180px] md:h-[280px] items-center py-2 px-1 rounded-md bg-transparent hover:bg-[rgba(49,50,50,1)] transition duration-300 ease-in-out cursor-pointer">
