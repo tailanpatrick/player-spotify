@@ -2,7 +2,7 @@ import { faBackwardStep, faCirclePlay, faForwardStep } from "@fortawesome/free-s
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Link } from "react-router-dom"
 
-const Player = () => {
+const Player = ({ duration }: { duration: string }) => {
   return (
     <div className="justify-self-stretch flex flex-col items-center gap-1">
       <div className="flex text-2xl items-center gap-5">
@@ -37,7 +37,7 @@ const Player = () => {
           ></div>
 
         </div>
-        <p>03:40</p>
+        <p>{duration}</p>
       </div>
     </div>
   )
