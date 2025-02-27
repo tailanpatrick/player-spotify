@@ -1,8 +1,8 @@
-import { Song } from "../types/song"
+import { SongInterface } from "../types/song"
 import SongItem from "./SongItem"
 
 
-const SongList = ({ artistSongs }: { artistSongs: Song[] }) => {
+const SongList = ({ artistSongs }: { artistSongs: SongInterface[] }) => {
   const items = 5;
 
   return (
