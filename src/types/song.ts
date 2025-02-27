@@ -1,4 +1,4 @@
-export interface Song {
+export interface SongInterface {
     image: string;
     name: string;
     duration: string;
