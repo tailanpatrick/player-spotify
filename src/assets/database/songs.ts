@@ -1,6 +1,6 @@
-import { Song } from "../../types/song";
+import { SongInterface } from "../../types/song";
 
-export const songsArray: Array<Song> = [
+export const songsArray: Array<SongInterface> = [
   {
     image: "https://i.scdn.co/image/ab67616d00001e022774b00531d558bc19e12a24",
     name: "Última Saudade - Ao Vivo",
