@@ -61,17 +61,17 @@ const Song = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-[1fr_3fr_1fr] place-items-center bg-black text-white gap-4 py-4 px-6">
+      <div className="grid grid-cols-[1fr_3fr_1fr] place-items-center bg-black text-white gap-3 py-4 px-6">
         <Link to={`/artists/${artistFromSong.id}`} className="justify-self-start rounded overflow-hidden">
           <img width={75} height={75} src={artistFromSong.image} alt={`Imagem do artista ${artist}`} />
         </Link>
 
         <Player duration={duration} onNext={() => changeSong("next")} onPrev={() => changeSong("prev")} />
-
-        <div>
+        <div className="truncate max-w-[100px] md:max-w-[250px] cursor-default " title={song.name}>
           <p className="text-[19px] font-bold">{name}</p>
           <p>{artist}</p>
         </div>
+
       </div>
     </div>
   );
