@@ -2,7 +2,15 @@ import { faBackwardStep, faCirclePlay, faForwardStep } from "@fortawesome/free-s
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Link } from "react-router-dom"
 
-const Player = ({ duration }: { duration: string }) => {
+const Player = ({
+  duration,
+   onNext,
+   onPrev
+  }: {
+    duration: string;
+    onNext: ()=> void;
+    onPrev: ()=> void
+  }) => {
   return (
     <div className="justify-self-stretch flex flex-col items-center gap-1">
       <div className="flex text-2xl items-center gap-5">
@@ -11,6 +19,7 @@ const Player = ({ duration }: { duration: string }) => {
           <FontAwesomeIcon
             icon={faBackwardStep}
             className="cursor-pointer transition-transform duration-200 ease hover:scale-105 hover:text-green-300"
+            onClick={onPrev}
           />
         </Link>
 
@@ -22,6 +31,7 @@ const Player = ({ duration }: { duration: string }) => {
           <FontAwesomeIcon
             icon={faForwardStep}
             className="cursor-pointer transition-transform duration-200 ease hover:scale-105 hover:text-green-300"
+            onClick={onNext}
           />
         </Link>
 

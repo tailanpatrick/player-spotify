@@ -1,31 +1,57 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { songsArray } from "../assets/database/songs";
 import { artistArray } from "../assets/database/artists";
 
 import Player from "../components/Player";
 import { SongInterface } from "../types/song";
 import { ArtistInterface } from "../types/artist";
+import { useEffect, useState } from "react";
 
 const Song = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const songId = Number(id);
+
+  const [currentSongID, setCurrentSongId] = useState(songId);
 
   if (isNaN(songId)) {
     return <div>Song not found</div>;
   }
 
-  const song: SongInterface = songsArray.filter((song) => song.id === songId)[0];
+  const song: SongInterface | undefined = songsArray.find((song) => song.id === currentSongID);
 
   if (!song) {
     return <div>Música não encontrada</div>;
   }
 
   const { image, name, artist, duration }: SongInterface = song;
-  const artistFromSong: ArtistInterface = artistArray.filter((artistItem) => artistItem.name === artist)[0];
+  const artistFromSong: ArtistInterface | undefined = artistArray.find((artistItem) => artistItem.name === artist);
 
   if (!artistFromSong) {
     return <div>Artista não encontrado</div>;
   }
+
+  const changeSong = (direction: "next" | "prev") => {
+    const currentIndex = songsArray.findIndex((song) => song.id === currentSongID);
+
+    if (currentIndex === -1) return;
+
+    let newIndex = direction === "next" ? currentIndex + 1 : currentIndex - 1;
+
+    if (newIndex < 0) {
+      newIndex = songsArray.length - 1;
+    } else if (newIndex >= songsArray.length) {
+      newIndex = 0;
+    }
+
+    setCurrentSongId(songsArray[newIndex].id);
+  };
+
+  useEffect(() => {
+    if (currentSongID !== songId) {
+      navigate(`/songs/${currentSongID}`);
+    }
+  }, [currentSongID, navigate]);
 
   return (
     <div className="grid grid-rows-[1fr_auto] flex-1">
@@ -40,7 +66,7 @@ const Song = () => {
           <img width={75} height={75} src={artistFromSong.image} alt={`Imagem do artista ${artist}`} />
         </Link>
 
-        <Player duration={duration}/>
+        <Player duration={duration} onNext={() => changeSong("next")} onPrev={() => changeSong("prev")} />
 
         <div>
           <p className="text-[19px] font-bold">{name}</p>
