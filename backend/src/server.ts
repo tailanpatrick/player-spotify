@@ -1,11 +1,14 @@
 import express, { Request, Response } from 'express';
+import { artistRoutes } from './routes/artist';
+import { songRoutes } from './routes/song';
 
 const app = express();
 const port = 3000;
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Olá, Express com TypeScript!');
-});
+
+// Rotas
+app.use(artistRoutes);
+app.use(songRoutes);
 
 
 app.listen(port, () => {
