@@ -7,8 +7,8 @@ const port = 3000;
 
 
 // Rotas
-app.use(artistRoutes);
-app.use(songRoutes);
+app.use('/artist', artistRoutes);
+app.use('/song', songRoutes);
 
 
 app.listen(port, () => {
