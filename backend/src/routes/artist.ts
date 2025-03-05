@@ -3,8 +3,8 @@ import { artistController } from '../controllers/ArtistController';
 
 const artistRoutes: Router = Router();
 
-artistRoutes.get('/artist', artistController.getAllArtists);
+artistRoutes.get('/', artistController.getAllArtists);
 
-artistRoutes.get('/artist/:id', artistController.getArtistById);
+artistRoutes.get('/:id', artistController.getArtistById);
 
 export { artistRoutes }
