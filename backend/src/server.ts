@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 import { artistRoutes } from './routes/artist';
 import { songRoutes } from './routes/song';
 
@@ -9,6 +9,7 @@ const port = 3000;
 // Rotas
 app.use('/artist', artistRoutes);
 app.use('/song', songRoutes);
+
 
 
 app.listen(port, () => {
