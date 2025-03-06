@@ -1,10 +1,12 @@
 import { Link, useLocation } from "react-router-dom";
 import SingleItem from "./SingleItem"
+import { ArtistInterface } from "../types/artist";
+import { SongInterface } from "../types/song";
 
 type ItemListProps = {
     title: string;
     items: number;
-    itemsArray: Array<{}>
+    itemsArray: ArtistInterface[] | SongInterface[]
     path: string;
 }
 
