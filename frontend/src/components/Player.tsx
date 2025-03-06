@@ -18,7 +18,7 @@ const Player = ({
 
           <FontAwesomeIcon
             icon={faBackwardStep}
-            className="cursor-pointer transition-transform duration-200 ease hover:scale-105 hover:text-green-300"
+            className="cursor-pointer p-2 transition-transform duration-200 ease hover:scale-105 hover:text-green-300"
             onClick={onPrev}
           />
         </Link>
@@ -30,7 +30,7 @@ const Player = ({
         <Link to="/songs/3">
           <FontAwesomeIcon
             icon={faForwardStep}
-            className="cursor-pointer transition-transform duration-200 ease hover:scale-105 hover:text-green-300"
+            className="cursor-pointer p-2 transition-transform duration-200 ease hover:scale-105 hover:text-green-300"
             onClick={onNext}
           />
         </Link>
