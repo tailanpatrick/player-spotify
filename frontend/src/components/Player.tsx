@@ -3,10 +3,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Link } from "react-router-dom"
 
 const Player = ({
+  audio,
   duration,
    onNext,
    onPrev
   }: {
+    audio: string;
     duration: string;
     onNext: ()=> void;
     onPrev: ()=> void
@@ -49,6 +51,8 @@ const Player = ({
         </div>
         <p>{duration}</p>
       </div>
+
+      <audio src={audio}></audio>
     </div>
   )
 }

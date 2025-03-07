@@ -86,7 +86,12 @@ const Song = () => {
           <img width={75} height={75} src={artistFromSong.image} alt={`Imagem do artista ${song.artist}`} />
         </Link>
 
-        <Player duration={song.duration} onNext={() => changeSong("next")} onPrev={() => changeSong("prev")} />
+        <Player duration={song.duration}
+          onNext={() => changeSong("next")}
+          onPrev={() => changeSong("prev")}
+          audio={song.audio}
+        />
+
         <div className="truncate max-w-[100px] md:max-w-[250px] cursor-default " title={song.name}>
           <p className="text-[19px] font-bold">{song.name}</p>
           <p>{song.artist}</p>
