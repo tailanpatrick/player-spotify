@@ -49,13 +49,9 @@ const Song = () => {
     }
   }, [currentSongID, navigate, songId]);
 
-  if (isNaN(songId)) {
-    return <div>Song not found</div>;
-  }
 
-  if (!song || !artistFromSong) {
-    return <div>Música ou Artista não encontrado</div>;
-  }
+
+
 
   const changeSong = (direction: "next" | "prev") => {
     const currentIndex = allSongs.findIndex((song) => song.id === currentSongID);
@@ -77,24 +73,24 @@ const Song = () => {
     <div className="grid grid-rows-[1fr_auto] flex-1">
       <div className="my-0 mx-5 rounded-tr-[15px] rounded-tl-[15px] flex justify-center items-center p-6 bg-[linear-gradient(180deg,rgba(18,18,18,1)_0%,rgba(83,83,83,0)_100%)]">
         <div className="shadow-[0_0_5px_1px_black]">
-          <img className="w-full h-full" src={song.image} alt={`Imagem da Música ${song.name}`} />
+          <img className="w-full h-full" src={song?.image} alt={`Imagem da Música ${song?.name}`} />
         </div>
       </div>
 
       <div className="grid grid-cols-[1fr_3fr_1fr] place-items-center bg-black text-white gap-3 py-4 px-6">
-        <Link to={`/artists/${artistFromSong.id}`} className="justify-self-start rounded overflow-hidden">
-          <img width={75} height={75} src={artistFromSong.image} alt={`Imagem do artista ${song.artist}`} />
+        <Link to={`/artists/${artistFromSong?.id}`} className="justify-self-start rounded overflow-hidden">
+          <img width={75} height={75} src={artistFromSong?.image} alt={`Imagem do artista ${song?.artist}`} />
         </Link>
 
-        <Player duration={song.duration}
+        <Player duration={song?.duration ?? '00:00'}
           onNext={() => changeSong("next")}
           onPrev={() => changeSong("prev")}
-          audio={song.audio}
+          audio={song?.audio ?? ''}
         />
 
-        <div className="truncate max-w-[100px] md:max-w-[250px] cursor-default " title={song.name}>
-          <p className="text-[19px] font-bold">{song.name}</p>
-          <p>{song.artist}</p>
+        <div className="truncate max-w-[100px] md:max-w-[250px] cursor-default " title={song?.name}>
+          <p className="text-[19px] font-bold">{song?.name}</p>
+          <p>{song?.artist}</p>
         </div>
       </div>
     </div>
