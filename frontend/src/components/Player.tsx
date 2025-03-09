@@ -15,6 +15,7 @@ const Player = ({
   }) => {
   return (
     <div className="justify-self-stretch flex flex-col items-center gap-1">
+
       <div className="flex text-2xl items-center gap-5">
         <Link to="/songs/1">
 
