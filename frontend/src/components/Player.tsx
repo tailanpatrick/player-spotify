@@ -1,6 +1,19 @@
-import { faBackwardStep, faCirclePlay, faForwardStep } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { Link } from "react-router-dom"
+import { useRef, useState } from "react"
+
+import { faBackwardStep, faCirclePause, faCirclePlay, faForwardStep } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+const formatTime = (timeInSeconds: number) => {
+  const minutes = Math.floor(timeInSeconds / 60).toString().padStart(2, "0");
+  const seconds = Math.floor(timeInSeconds - Number(minutes) * 60).toString().padStart(2, "0");;
+
+  return `${minutes}:${seconds}`
+}
+
+function timeToSeconds(minutes: number, seconds: number) {
+  return minutes * 60 + seconds;
+}
 
 const Player = ({
   audio,
@@ -13,6 +26,20 @@ const Player = ({
     onNext: ()=> void;
     onPrev: ()=> void
   }) => {
+
+    const audioPlayer = useRef<HTMLAudioElement | null>(null)
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [currentTime, setCurrentTime] = useState(formatTime(0));
+
+    //console.log(audioPlayer.current?.play())
+
+    const playPause = () => {
+      isPlaying  ? audioPlayer.current?.pause() : audioPlayer.current?.play();
+      setIsPlaying(!isPlaying);
+
+      console.log(formatTime(audioPlayer.current?.currentTime || 0))
+    }
+
   return (
     <div className="justify-self-stretch flex flex-col items-center gap-1">
 
@@ -27,8 +54,9 @@ const Player = ({
         </Link>
 
         <FontAwesomeIcon
-          icon={faCirclePlay}
+          icon={isPlaying ? faCirclePause : faCirclePlay}
           className="text-[35px] p-3 cursor-pointer transition-transform duration-200 ease hover:scale-105 hover:text-green-300"
+          onClick={() => playPause()}
         />
         <Link to="/songs/3">
           <FontAwesomeIcon
@@ -41,7 +69,7 @@ const Player = ({
       </div>
 
       <div className="flex gap-[10px] items-center justify-between w-[100%] max-w-[600px]">
-        <p>00:00</p>
+        <p>{currentTime}</p>
         <div className="w-[100%] h-1 bg-[#666666] rounded overflow-hidden">
 
           <div
@@ -50,10 +78,10 @@ const Player = ({
           ></div>
 
         </div>
-        <p>{duration}</p>
+        <p>{formatTime(timeToSeconds(...(duration.split(':').map(Number) as [number, number])))}</p>
       </div>
 
-      <audio src={audio}></audio>
+      <audio ref={audioPlayer} src={audio}></audio>
     </div>
   )
 }
