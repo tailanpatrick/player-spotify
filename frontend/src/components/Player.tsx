@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom"
-import { useRef, useState } from "react"
+import { useRef, useState, useEffect } from "react"
 
 import { faBackwardStep, faCirclePause, faCirclePlay, faForwardStep } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 
 const formatTime = (timeInSeconds: number) => {
   const minutes = Math.floor(timeInSeconds / 60).toString().padStart(2, "0");
@@ -18,27 +19,39 @@ function timeToSeconds(minutes: number, seconds: number) {
 const Player = ({
   audio,
   duration,
-   onNext,
-   onPrev
-  }: {
-    audio: string;
-    duration: string;
-    onNext: ()=> void;
-    onPrev: ()=> void
-  }) => {
+  onNext,
+  onPrev
+}: {
+  audio: string;
+  duration: string;
+  onNext: () => void;
+  onPrev: () => void
+}) => {
 
-    const audioPlayer = useRef<HTMLAudioElement | null>(null)
-    const [isPlaying, setIsPlaying] = useState(false);
-    const [currentTime, setCurrentTime] = useState(formatTime(0));
+  const audioPlayer = useRef<HTMLAudioElement | null>(null)
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(formatTime(0));
 
-    //console.log(audioPlayer.current?.play())
+  //console.log(audioPlayer.current?.play())
 
-    const playPause = () => {
-      isPlaying  ? audioPlayer.current?.pause() : audioPlayer.current?.play();
-      setIsPlaying(!isPlaying);
+  useEffect(() => {
+    const intervalId = setInterval(() => {
 
-      console.log(formatTime(audioPlayer.current?.currentTime || 0))
-    }
+      isPlaying
+      ? setCurrentTime(formatTime(audioPlayer.current?.currentTime || 0))
+      : null
+
+    }, 1000)
+    return () => clearInterval(intervalId)
+
+  }, [isPlaying])
+
+  const playPause = () => {
+    isPlaying ? audioPlayer.current?.pause() : audioPlayer.current?.play();
+
+    setIsPlaying(!isPlaying);
+
+  }
 
   return (
     <div className="justify-self-stretch flex flex-col items-center gap-1">
