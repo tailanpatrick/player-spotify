@@ -77,22 +77,26 @@ const Song = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-[1fr_3fr_1fr] place-items-center bg-black text-white gap-3 py-4 px-6">
-        <Link to={`/artists/${artistFromSong?.id}`} className="justify-self-start rounded overflow-hidden">
-          <img width={75} height={75} src={artistFromSong?.image} alt={`Imagem do artista ${song?.artist}`} />
+      <div className="bg-black text-white gap-3 py-4 px-6 sm:grid sm:grid-cols-[1fr_3fr_1fr] sm:place-items-center flex flex-col items-center">
+    <div className="hidden sm:block justify-self-start rounded overflow-hidden">
+        <Link to={`/artists/${artistFromSong?.id}`} className="block">
+            <img width={75} height={75} src={artistFromSong?.image} alt={`Imagem do artista ${song?.artist}`} />
         </Link>
+    </div>
 
+    <div className="w-full sm:w-auto sm:w-[500px]"> {/* Player maior no desktop */}
         <Player duration={song?.duration ?? '00:00'}
-          onNext={() => changeSong("next")}
-          onPrev={() => changeSong("prev")}
-          audio={song?.audio ?? ''}
+            onNext={() => changeSong("next")}
+            onPrev={() => changeSong("prev")}
+            audio={song?.audio ?? ''}
         />
+    </div>
 
-        <div className="truncate max-w-[100px] md:max-w-[250px] cursor-default " title={song?.name}>
-          <p className="text-[19px] font-bold">{song?.name}</p>
-          <p>{song?.artist}</p>
-        </div>
-      </div>
+    <div className="text-center mt-4 sm:mt-0">
+        <p className="text-[19px] font-bold">{song?.name}</p>
+        <p>{song?.artist}</p>
+    </div>
+</div>
     </div>
   );
 };
