@@ -84,7 +84,7 @@ const Song = () => {
           </Link>
         </div>
 
-        <div className="w-full sm:w-auto sm:w-[500px]"> {/* Player maior no desktop */}
+        <div className="w-full sm:w-[500px]"> {/* Player maior no desktop */}
           <Player duration={song?.duration ?? '00:00'}
             onNext={() => changeSong("next")}
             onPrev={() => changeSong("prev")}

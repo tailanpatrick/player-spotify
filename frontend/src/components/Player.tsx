@@ -37,9 +37,8 @@ const Player = ({
   useEffect(() => {
     const intervalId = setInterval(() => {
 
-      isPlaying
-      ? setCurrentTime(formatTime(audioPlayer.current?.currentTime || 0))
-      : null
+      if (isPlaying)
+        setCurrentTime(formatTime(audioPlayer.current?.currentTime || 0))
 
     }, 1000)
     return () => clearInterval(intervalId)
