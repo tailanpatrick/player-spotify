@@ -29,8 +29,10 @@ const Player = ({
 }) => {
 
   const audioPlayer = useRef<HTMLAudioElement | null>(null)
+  const progressBar = useRef<HTMLDivElement | null>(null)
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(formatTime(0));
+  const durationInSeconds = timeToSeconds(...(duration.split(':').map(Number) as [number, number]));
 
   //console.log(audioPlayer.current?.play())
 
@@ -85,12 +87,13 @@ const Player = ({
         <div className="w-[100%] h-1 bg-[#666666] rounded overflow-hidden">
 
           <div
+          ref={progressBar}
             className="h-full bg-white transition-[width] ease duration-200"
             style={{ width: "var(--_progress)" }}
           ></div>
 
         </div>
-        <p>{formatTime(timeToSeconds(...(duration.split(':').map(Number) as [number, number])))}</p>
+        <p>{formatTime(durationInSeconds)}</p>
       </div>
 
       <audio ref={audioPlayer} src={audio}></audio>
