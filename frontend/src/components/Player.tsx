@@ -37,12 +37,14 @@ const Player = ({
   //console.log(audioPlayer.current?.play())
 
   useEffect(() => {
+
     const intervalId = setInterval(() => {
+      if (isPlaying && audioPlayer.current && audioPlayer.current.currentTime && durationInSeconds) {
+        setCurrentTime(formatTime(audioPlayer.current.currentTime));
+        progressBar.current?.style.setProperty('--_progress', ((audioPlayer.current.currentTime / durationInSeconds) * 100) + "%");
+      }
+    }, 1000);
 
-      if (isPlaying)
-        setCurrentTime(formatTime(audioPlayer.current?.currentTime || 0))
-
-    }, 1000)
     return () => clearInterval(intervalId)
 
   }, [isPlaying])
@@ -87,7 +89,7 @@ const Player = ({
         <div className="w-[100%] h-1 bg-[#666666] rounded overflow-hidden">
 
           <div
-          ref={progressBar}
+            ref={progressBar}
             className="h-full bg-white transition-[width] ease duration-200"
             style={{ width: "var(--_progress)" }}
           ></div>
