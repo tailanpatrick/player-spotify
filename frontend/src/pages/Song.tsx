@@ -112,7 +112,7 @@ const Song = () => {
             <div className="bg-black text-white gap-3 py-4 px-6 sm:grid sm:grid-cols-[1fr_3fr_1fr] sm:place-items-center flex flex-col items-center">
                 <div className="hidden sm:block justify-self-start rounded overflow-hidden">
                     <Link to={`/artists/${artistFromSong?.id}`} className="block">
-                        <img width={75} height={75} src={artistFromSong?.image} alt={`Imagem do artista ${song?.artist}`} />
+                        <img width={75} height={70} src={artistFromSong?.image} alt={`Imagem do artista ${song?.artist}`} />
                     </Link>
                 </div>
                 <div className="w-full sm:w-[500px]">
