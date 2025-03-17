@@ -9,31 +9,59 @@ const formatTime = (timeInSeconds: number) => {
     return `${minutes}:${seconds}`;
 };
 
-function timeToSeconds(minutes: number, seconds: number) {
-    return minutes * 60 + seconds;
-}
-
 const Player = ({
     audio,
-    duration,
     onNext,
     onPrev,
     setAudioPlayerRef,
 }: {
     audio: string;
-    duration: string;
     onNext: () => void;
     onPrev: () => void;
     setAudioPlayerRef: Dispatch<SetStateAction<RefObject<HTMLAudioElement | null> | undefined>>;
-    setIsPlaying: boolean;
 }) => {
     const audioPlayer = useRef<HTMLAudioElement | null>(null);
     const progressBar = useRef<HTMLDivElement | null>(null);
     const [localIsPlaying, setLocalIsPlaying] = useState(true);
     const [currentTime, setCurrentTime] = useState(formatTime(0));
-    const durationInSeconds = timeToSeconds(...(duration.split(':').map(Number) as [number, number]));
+    const [durationInSeconds, setDurationInSeconds] = useState<number | null>(null);
     const [autoPlayBlocked, setAutoPlayBlocked] = useState(false);
     const [loadingTimeout, setLoadingTimeout] = useState<NodeJS.Timeout | null>(null);
+
+    useEffect(() => {
+        const audioRef = audioPlayer.current;
+        if (audioRef) {
+            const handleLoadedMetadata = () => {
+                setDurationInSeconds(audioRef.duration);
+            };
+
+            const handleError = (e:any) => {
+                console.error("Erro no elemento audio:", e, audio);
+                clearTimeout(loadingTimeout as NodeJS.Timeout);
+            };
+
+            const handleStalled = (e:any) => {
+                console.error("A música está travada:", e, audio);
+                clearTimeout(loadingTimeout as NodeJS.Timeout);
+            };
+
+            const handleLoadedData = () => {
+                console.log("Dados carregados:", audio);
+            };
+
+            audioRef.addEventListener('loadedmetadata', handleLoadedMetadata);
+            audioRef.addEventListener('error', handleError);
+            audioRef.addEventListener('stalled', handleStalled);
+            audioRef.addEventListener('loadeddata', handleLoadedData);
+
+            return () => {
+                audioRef.removeEventListener('loadedmetadata', handleLoadedMetadata);
+                audioRef.removeEventListener('error', handleError);
+                audioRef.removeEventListener('stalled', handleStalled);
+                audioRef.removeEventListener('loadeddata', handleLoadedData);
+            };
+        }
+    }, [audio]);
 
     useEffect(() => {
         const intervalId = setInterval(() => {
@@ -47,16 +75,13 @@ const Player = ({
 
     useEffect(() => {
         if (audioPlayer.current && !autoPlayBlocked) {
-            console.log("Iniciando reprodução automática:", audio);
             setLoadingTimeout(setTimeout(() => {
                 console.error("Tempo limite de carregamento excedido.");
-
             }, 10000));
 
             audioPlayer.current.play()
                 .then(() => {
-                    console.log("Reprodução iniciada:", audio);
-                    clearTimeout(loadingTimeout as NodeJS.Timeout);;
+                    clearTimeout(loadingTimeout as NodeJS.Timeout);
                     setLocalIsPlaying(true);
                     setAudioPlayerRef(audioPlayer);
                 })
@@ -66,28 +91,7 @@ const Player = ({
                     setAutoPlayBlocked(true);
                 });
         }
-
-        if (audioPlayer.current) {
-            audioPlayer.current.onerror = (e) => {
-                console.error("Erro no elemento audio:", e, audio);
-                clearTimeout(loadingTimeout as NodeJS.Timeout);
-
-            };
-
-            audioPlayer.current.onstalled = (e) => {
-                console.error("A música está travada:", e, audio);
-                clearTimeout(loadingTimeout as NodeJS.Timeout);
-            };
-
-            audioPlayer.current.onloadedmetadata = () => {
-                console.log("Metadados carregados:", audio);
-            };
-
-            audioPlayer.current.onloadeddata = () => {
-                console.log("Dados carregados:", audio);
-            };
-        }
-    }, [audio]);
+    }, [audio, setAudioPlayerRef, autoPlayBlocked, loadingTimeout]);
 
     const playPause = () => {
         if (audioPlayer.current) {
@@ -116,7 +120,7 @@ const Player = ({
     const handleNextSong = () => {
         if (audioPlayer.current) {
             audioPlayer.current.currentTime = 0;
-            setLocalIsPlaying(true)
+            setLocalIsPlaying(true);
         }
         onNext();
     };
@@ -124,7 +128,7 @@ const Player = ({
     const handlePrevSong = () => {
         if (audioPlayer.current) {
             audioPlayer.current.currentTime = 0;
-            setLocalIsPlaying(true)
+            setLocalIsPlaying(true);
         }
         onPrev();
     };
@@ -166,9 +170,9 @@ const Player = ({
                         ></div>
                     </div>
                 </div>
-                <p>{formatTime(durationInSeconds)}</p>
+                <p>{durationInSeconds ? formatTime(durationInSeconds) : "00:00"}</p>
             </div>
-            <audio ref={audioPlayer} src={audio} autoPlay></audio>
+            <audio ref={audioPlayer} src={audio} autoPlay onEnded={() => handleNextSong()}></audio>
             {autoPlayBlocked && (
                 <button onClick={() => {
                     if (audioPlayer.current) {
