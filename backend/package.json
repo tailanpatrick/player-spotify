@@ -4,11 +4,12 @@
 	"description": "",
 	"main": "dist/index.js",
 	"scripts": {
-		"build": "tsc",
+		"build": "prisma generate && tsc",
 		"start": "node dist/server.js",
 		"dev": "npm run build && npm run start",
 		"dev:watch": "concurrently \"tsc --watch\" \"nodemon dist/server.js\"",
-		"seed": "prisma db seed"
+		"seed": "prisma db seed",
+		"postinstall": "prisma generate"
 	},
 	"prisma": {
 		"seed": "ts-node prisma/seed.ts"
