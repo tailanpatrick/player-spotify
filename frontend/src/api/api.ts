@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 
-const BASE_URL = "http://192.168.100.175:3000";
+const BASE_URL = "https://backend-spotify-snowy.vercel.app";
 
 const api = axios.create({
   baseURL: BASE_URL
