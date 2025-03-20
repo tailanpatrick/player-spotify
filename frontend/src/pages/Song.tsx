@@ -1,4 +1,4 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import Player from "../components/Player";
 import { SongInterface } from "../types/song";
 import { ArtistInterface } from "../types/artist";
@@ -19,6 +19,7 @@ const Song = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [, setCurrentTime] = useState('00:00');
   const [autoPlayBlocked, setAutoPlayBlocked] = useState(false);
+
 
   useEffect(() => {
 
@@ -136,7 +137,6 @@ const Song = () => {
                 });
             }
           }}>
-            Tocar Música
           </button>
         )}
         <div className="text-center mt-4 sm:mt-0">
