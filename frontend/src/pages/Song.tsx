@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Player from "../components/Player";
 import { SongInterface } from "../types/song";
 import { ArtistInterface } from "../types/artist";

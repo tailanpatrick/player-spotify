@@ -30,7 +30,7 @@ const Player = ({
     const [currentTime, setCurrentTime] = useState(formatTime(0));
     const [durationInSeconds, setDurationInSeconds] = useState<number | null>(null);
     const [autoPlayBlocked, setAutoPlayBlocked] = useState(false);
-    const [loadingTimeout, setLoadingTimeout] = useState<NodeJS.Timeout | null>(null);
+    const [loadingTimeout, ] = useState<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
         const audioRef = audioPlayer.current;
@@ -77,25 +77,31 @@ const Player = ({
         return () => clearInterval(intervalId);
     }, [localIsPlaying, durationInSeconds]);
 
-    useEffect(() => {
-        if (audioPlayer.current && !autoPlayBlocked) {
-            setLoadingTimeout(setTimeout(() => {
-                console.error("Tempo limite de carregamento excedido.");
-            }, 10000));
 
-            audioPlayer.current.play()
-                .then(() => {
-                    clearTimeout(loadingTimeout as NodeJS.Timeout);
-                    setLocalIsPlaying(true);
-                    setAudioPlayerRef(audioPlayer);
-                })
-                .catch(error => {
-                    console.error("Erro ao iniciar a reprodução automática:", error, audio);
-                    clearTimeout(loadingTimeout as NodeJS.Timeout);
-                    setAutoPlayBlocked(true);
-                });
-        }
-    }, [audio, setAudioPlayerRef, autoPlayBlocked, loadingTimeout]);
+    useEffect(() => {
+      if (audioPlayer.current && !autoPlayBlocked) {
+          const timeout = setTimeout(() => {
+              console.error("Tempo limite de carregamento excedido.");
+          }, 10000);
+
+          audioPlayer.current.play()
+              .then(() => {
+                  clearTimeout(timeout);
+                  setLocalIsPlaying(true);
+
+                  // Atualiza a ref apenas se necessário
+                  setAudioPlayerRef(prevRef => (prevRef === audioPlayer ? prevRef : audioPlayer));
+              })
+              .catch(error => {
+                  console.error("Erro ao iniciar a reprodução automática:", error, audio);
+                  clearTimeout(timeout);
+                  setAutoPlayBlocked(true);
+              });
+
+          return () => clearTimeout(timeout);
+      }
+  }, [audio, autoPlayBlocked, setAudioPlayerRef]);
+
 
     const playPause = () => {
         if (audioPlayer.current) {
