@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { faBackwardStep, faCirclePause, faCirclePlay, faForwardStep } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-// Tipo para o estado do Player
+
 interface PlayerProps {
     audio: string;
     onNext: () => void;
@@ -22,7 +22,7 @@ const Player = ({
     onNext,
     onPrev,
     setAudioPlayerRef,
-    setIsPlaying, // Recebendo a função de atualização do estado
+    setIsPlaying,
 }: PlayerProps) => {
     const audioPlayer = useRef<HTMLAudioElement | null>(null);
     const progressBar = useRef<HTMLDivElement | null>(null);
@@ -73,7 +73,7 @@ const Player = ({
                 setCurrentTime(formatTime(audioPlayer.current.currentTime));
                 progressBar.current?.style.setProperty('--_progress', ((audioPlayer.current.currentTime / durationInSeconds) * 100) + "%");
             }
-        }, 1000);
+        }, 500);
         return () => clearInterval(intervalId);
     }, [localIsPlaying, durationInSeconds]);
 
@@ -108,11 +108,11 @@ const Player = ({
             if (localIsPlaying) {
                 audioPlayer.current.pause();
                 setLocalIsPlaying(false);
-                setIsPlaying(false); // Aqui você chama o setIsPlaying corretamente
+                setIsPlaying(false);
             } else {
                 audioPlayer.current.play();
                 setLocalIsPlaying(true);
-                setIsPlaying(true); // Atualizando o estado corretamente
+                setIsPlaying(true);
             }
         }
     };
@@ -173,7 +173,7 @@ const Player = ({
                     <div className="w-[100%] h-1 bg-[#666666] rounded overflow-hidden">
                         <div
                             ref={progressBar}
-                            className="h-full bg-white transition-[width] ease duration-200"
+                            className="h-full bg-white transition-[width]  ease duration-200"
                             style={{ width: "var(--_progress)" }}
                         ></div>
                     </div>
