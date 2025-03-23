@@ -8,7 +8,7 @@ interface PlayerProps {
     onNext: () => void;
     onPrev: () => void;
     setAudioPlayerRef: React.Dispatch<React.SetStateAction<React.RefObject<HTMLAudioElement | null> | undefined>>;
-    setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>; // Aqui você tem que passar a função setIsPlaying
+    setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const formatTime = (timeInSeconds: number) => {
@@ -89,7 +89,6 @@ const Player = ({
                   clearTimeout(timeout);
                   setLocalIsPlaying(true);
 
-                  // Atualiza a ref apenas se necessário
                   setAudioPlayerRef(prevRef => (prevRef === audioPlayer ? prevRef : audioPlayer));
               })
               .catch(error => {
